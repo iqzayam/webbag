@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head><title>🎟️ Klaim Panel</title></head>
+<body>
+  <h2>🎟️ Klaim Panel</h2>
+  <form id="claimForm">
+    <label>Token:</label><br>
+    <input type="text" name="token" required><br><br>
+    <label>Username:</label><br>
+    <input type="text" name="username" required><br><br>
+    <label>Password:</label><br>
+    <input type="password" name="password" required><br><br>
+    <button type="submit">Claim</button>
+  </form>
+  <p id="result"></p>
+  <br>
+  <a href="tokens.html">📂 Lihat Token Aktif</a> |
+  <a href="users.html">👤 Lihat User</a>
+
+  <script>
+    document.getElementById("claimForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+
+      const res = await fetch("/api/claim", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      document.getElementById("result").innerHTML = json.success
+        ? `✅ Panel dibuat!<br>Username: <b>${json.username}</b><br>Password: <b>${json.password}</b><br>Paket: <b>${json.package}</b>`
+        : `❌ ${json.error}`;
+    });
+  </script>
+</body>
+</html>
