@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><title>📂 Token Aktif</title></head>
+<body>
+  <h2>📂 Token Aktif</h2>
+  <ul id="tokenList"></ul>
+  <br><a href="index.html">⬅️ Kembali</a>
+  <script>
+    async function loadTokens() {
+      const res = await fetch("/api/tokens");
+      const tokens = await res.json();
+      const list = document.getElementById("tokenList");
+      if (tokens.length === 0) {
+        list.innerHTML = "<li>⚠️ Tidak ada token aktif</li>";
+      } else {
+        tokens.forEach(t => {
+          const li = document.createElement("li");
+          li.innerHTML = `<b>${t.code}</b> → Paket: ${t.package}`;
+          list.appendChild(li);
+        });
+      }
+    }
+    loadTokens();
+  </script>
+</body>
+</html>

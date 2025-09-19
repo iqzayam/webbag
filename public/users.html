@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>👤 User Klaim</title></head>
+<body>
+  <h2>👤 User Klaim</h2>
+  <table border="1" cellpadding="5">
+    <tr><th>Username</th><th>Password</th><th>Paket</th></tr>
+    <tbody id="userTable"></tbody>
+  </table>
+  <br><a href="index.html">⬅️ Kembali</a>
+  <script>
+    async function loadUsers() {
+      const res = await fetch("/api/users");
+      const users = await res.json();
+      const table = document.getElementById("userTable");
+      if (users.length === 0) {
+        table.innerHTML = "<tr><td colspan='3'>⚠️ Belum ada user</td></tr>";
+      } else {
+        users.forEach(u => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${u.username}</td><td>${u.password}</td><td>${u.package}</td>`;
+          table.appendChild(tr);
+        });
+      }
+    }
+    loadUsers();
+  </script>
+</body>
+</html>
