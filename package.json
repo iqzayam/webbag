@@ -1,0 +1,7 @@
+{
+  "name": "panel-vercel",
+  "version": "1.0.0",
+  "dependencies": {
+    "better-sqlite3": "^9.4.0"
+  }
+}
